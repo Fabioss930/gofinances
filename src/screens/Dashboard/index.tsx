@@ -58,7 +58,13 @@ const Dashboard: React.FC = () => {
       </HighlightCards>
       <Transactions>
         <Title>Listagem</Title>
-        <TransactionsCard />
+        <TransactionsCard
+          type="up"
+          title="Desenvolvimento de site"
+          amount="R$ 12.000,00"
+          categoryName="Vendas"
+          date="13/04/2020"
+        />
       </Transactions>
     </Container>
   );
