@@ -10,32 +10,38 @@ import {
   Date,
 } from "./styles";
 
-interface Props {
-  type: "up" | "down";
+interface Category {
+  name: string;
+  icon: string;
+}
+
+export interface TransactionCardProps {
+  type: "positive" | "negative";
   title: string;
   amount: string;
-  categoryName: string;
+  category: Category;
   date: string;
 }
 
-const TransactionsCard: React.FC<Props> = ({
-  type,
-  title,
-  amount,
-  categoryName,
-  date,
-}) => {
+interface Props {
+  data: TransactionCardProps;
+}
+
+const TransactionsCard: React.FC<Props> = ({ data }) => {
   return (
     <>
       <Container>
-        <Title>{title}</Title>
-        <Amount type={type}>{amount}</Amount>
+        <Title>{data.title}</Title>
+        <Amount type={data.type}>
+          {data.type === "negative" && "- "}
+          {data.amount}
+        </Amount>
         <Footer>
           <Category>
-            <Icon name="dollar-sign" />
-            <CategoryName>{categoryName}</CategoryName>
+            <Icon name={data.category.icon} />
+            <CategoryName>{data.category.name}</CategoryName>
           </Category>
-          <Date>{date}</Date>
+          <Date>{data.date}</Date>
         </Footer>
       </Container>
     </>
