@@ -5,7 +5,9 @@ import {
   getStatusBarHeight,
   getBottomSpace,
 } from "react-native-iphone-x-helper";
+
 import { Feather } from "@expo/vector-icons";
+
 import { DataListProps } from ".";
 
 export const Container = styled.View`
@@ -60,6 +62,8 @@ export const Icon = styled(Feather)`
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${RFValue(24)}px;
 `;
+
+export const LogoutButton = styled.TouchableOpacity``;
 
 export const HighlightCards = styled.ScrollView.attrs({
   horizontal: true,
