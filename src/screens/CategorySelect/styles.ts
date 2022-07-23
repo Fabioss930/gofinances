@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+
 interface CategoryProps {
   isActive: boolean;
 }

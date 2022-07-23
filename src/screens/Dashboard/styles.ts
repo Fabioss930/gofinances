@@ -5,6 +5,7 @@ import {
   getStatusBarHeight,
   getBottomSpace,
 } from "react-native-iphone-x-helper";
+import {BorderlessButton} from 'react-native-gesture-handler';
 
 import { Feather } from "@expo/vector-icons";
 
@@ -63,7 +64,7 @@ export const Icon = styled(Feather)`
   font-size: ${RFValue(24)}px;
 `;
 
-export const LogoutButton = styled.TouchableOpacity``;
+export const LogoutButton = styled(BorderlessButton)``;
 
 export const HighlightCards = styled.ScrollView.attrs({
   horizontal: true,

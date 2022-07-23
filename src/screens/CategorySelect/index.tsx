@@ -12,6 +12,7 @@ import {
 } from "./styles";
 import { categories } from "../../utils/categories";
 import Button from "../../components/Forms/Button";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 interface Category {
   key: string;
@@ -54,7 +55,9 @@ const CategorySelect: React.FC<Props> = ({
         ItemSeparatorComponent={() => <Separator />}
       />
       <Footer>
-        <Button title="Selecionar" onPress={closeSelectCategory} />
+        <GestureHandlerRootView>
+          <Button title="Selecionar" onPress={closeSelectCategory} />
+        </GestureHandlerRootView>
       </Footer>
     </Container>
   );

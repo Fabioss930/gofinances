@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import InputForm from "../../components/Forms/InputForm";
 import TransactionTypeButton from "../../components/Forms/TransactionTypeButton";
-import CategorySelectButton from "../../components/Forms/CategorySelect";
+import CategorySelectButton from "../../components/Forms/CategorySelectButton";
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
 import CategorySelect from "../CategorySelect";
 import { useForm } from "react-hook-form";
