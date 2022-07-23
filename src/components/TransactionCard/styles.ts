@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
-import { Feather } from "@expo/vector-icons";
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
 
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 interface TypeProps {
   type: "positive" | "negative";
@@ -36,7 +36,7 @@ export const Category = styled.View`
   flex-direction: row;
   align-items: center;
 `;
-export const Icon = styled(Feather)`
+export const Icon = styled(FontAwesome5)`
   font-size: ${RFValue(20)}px;
   color: ${({ theme }) => theme.colors.text};
 `;

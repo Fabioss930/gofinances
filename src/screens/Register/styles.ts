@@ -30,7 +30,9 @@ export const Form = styled.View`
   justify-content: space-between;
 `;
 
-export const Fields = styled.View``;
+export const Fields = styled.View`
+  margin-bottom: 12px;
+`;
 
 export const TransactionsType = styled.View`
   flex-direction: row;

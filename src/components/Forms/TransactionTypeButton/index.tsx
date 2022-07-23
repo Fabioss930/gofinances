@@ -21,7 +21,7 @@ const TransactionTypeButton: React.FC<TypeProps> = ({
 }) => {
   return (
     <Container type={type} isActive={isActive}>
-      <Button {...rest}>
+      <Button {...rest} type={type} isActive={isActive}>
         <Icon name={icon[type]} type={type} />
         <Title>{title}</Title>
       </Button>

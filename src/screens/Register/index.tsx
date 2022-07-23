@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/Forms/Button";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import uuid from "react-native-uuid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import InputForm from "../../components/Forms/InputForm";
 import TransactionTypeButton from "../../components/Forms/TransactionTypeButton";
 import CategorySelectButton from "../../components/Forms/CategorySelectButton";
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
 import CategorySelect from "../CategorySelect";
+
 import { useForm } from "react-hook-form";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Container,
@@ -18,6 +21,7 @@ import {
   Fields,
   TransactionsType,
 } from "./styles";
+import Dashboard from "../Dashboard";
 
 interface FormData {
   name: string;
@@ -35,20 +39,24 @@ const schema = Yup.object().shape({
 const Register: React.FC = () => {
   const [transactionType, setTransactionType] = useState("");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const dataKey = "@gofinances:transactions";
   const [category, setCategory] = useState({
     key: "category",
     name: "Categoria",
   });
 
+  const navigation = useNavigation();
+
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  function handleTransactionsTypeSelect(type: "up" | "down") {
+  function handleTransactionsTypeSelect(type: "positive" | "negative") {
     setTransactionType(type);
   }
 
@@ -60,20 +68,39 @@ const Register: React.FC = () => {
     setCategoryModalOpen(false);
   }
 
-  function handleRegister(form: FormData) {
+  async function handleRegister(form: FormData) {
     if (!transactionType) {
       return Alert.alert("Atenção", "Selecione o tipo da transação");
     }
     if (category.key === "category") {
       return Alert.alert("Atenção", "Selecione a categoria");
     }
-    const data = {
+    const newTransaction = {
+      id: String(uuid.v4()),
       name: form.name,
       amount: form.amount,
       category: category.key,
-      transactionType,
+      type: transactionType,
+      date: new Date(),
     };
-    console.log(data);
+
+    try {
+      const data = await AsyncStorage.getItem(dataKey);
+      const currentData = data ? JSON.parse(data) : [];
+      const dataFormatted = [...currentData, newTransaction];
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
+      Alert.alert("Atenção", "Cadastro salvo com sucesso.");
+      reset();
+      setTransactionType("");
+      setCategory({
+        key: "category",
+        name: "Categoria",
+      });
+      // navigation.navigate("Listagem");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Atenção!", "Não foi possível salvar, favor tente novamente");
+    }
   }
 
   return (
@@ -103,14 +130,14 @@ const Register: React.FC = () => {
               <TransactionTypeButton
                 type="up"
                 title="Entrada"
-                onPress={() => handleTransactionsTypeSelect("up")}
-                isActive={transactionType === "up"}
+                onPress={() => handleTransactionsTypeSelect("positive")}
+                isActive={transactionType === "positive"}
               />
               <TransactionTypeButton
                 type="down"
                 title="Saída"
-                onPress={() => handleTransactionsTypeSelect("down")}
-                isActive={transactionType === "down"}
+                onPress={() => handleTransactionsTypeSelect("negative")}
+                isActive={transactionType === "negative"}
               />
             </TransactionsType>
             <CategorySelectButton
