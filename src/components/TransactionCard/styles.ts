@@ -37,7 +37,7 @@ export const Category = styled.View`
   align-items: center;
 `;
 export const Icon = styled(FontAwesome5)`
-  font-size: ${RFValue(20)}px;
+  font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.text};
 `;
 export const CategoryName = styled.Text`
