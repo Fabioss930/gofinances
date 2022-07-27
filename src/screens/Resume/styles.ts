@@ -22,6 +22,12 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const Content = styled.ScrollView.attrs({
-  contentContainerStyle: { flex: 1, padding: 20 },
-})``;
+export const Content = styled.View`
+  flex: 1;
+  padding: 20px;
+`;
+
+export const ChartContainer = styled.View`
+  width: 100%;
+  align-items: center;
+`;
