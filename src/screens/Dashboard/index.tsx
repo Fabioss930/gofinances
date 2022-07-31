@@ -137,8 +137,6 @@ const Dashboard: React.FC = () => {
       },
     });
     setIsLoading(false);
-
-    console.log(transactionFormatted);
   }
 
   useEffect(() => {
