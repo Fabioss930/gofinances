@@ -22,6 +22,7 @@ import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { ActivityIndicator, ScrollView } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useTheme } from "styled-components";
+import { useAuth } from "../../hooks/auth";
 
 interface TransactionData {
   type: "positive" | "negative";
@@ -44,7 +45,7 @@ const Resume: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectDate, setSelectDate] = useState(new Date());
   const [totalByCategories, setTotaByCategories] = useState<CategoryData[]>([]);
-
+  const { user } = useAuth();
   const theme = useTheme();
   function handleDateChange(action: "next" | "prev") {
     if (action === "next") {
@@ -56,7 +57,7 @@ const Resume: React.FC = () => {
 
   async function loadData() {
     setIsLoading(true);
-    const dataKey = "@gofinances:transactions";
+    const dataKey = `@gofinances:transactions_user${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormatted = response ? JSON.parse(response) : [];
 

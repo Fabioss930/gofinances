@@ -22,6 +22,7 @@ import {
   TransactionsType,
 } from "./styles";
 import Dashboard from "../Dashboard";
+import { useAuth } from "../../hooks/auth";
 
 interface FormData {
   name: string;
@@ -39,12 +40,12 @@ const schema = Yup.object().shape({
 const Register: React.FC = () => {
   const [transactionType, setTransactionType] = useState("");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
-  const dataKey = "@gofinances:transactions";
+  const { user } = useAuth();
   const [category, setCategory] = useState({
     key: "category",
     name: "Categoria",
   });
-
+  const dataKey = `@gofinances:transactions_user${user.id}`;
   const navigation = useNavigation();
 
   const {

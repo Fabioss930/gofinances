@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { RFValue } from 'react-native-responsive-fontsize';
-import AppleSvg from '../../assets/apple.svg';
-import GoogleSvg from '../../assets/google.svg';
-import LogoSvg from '../../assets/logo.svg';
-import { useAuth } from '../../hooks/auth';
-import SignSocialButton from '../../components/SignInSocialButton';
+import React, { useContext, useState } from "react";
+import { RFValue } from "react-native-responsive-fontsize";
+import AppleSvg from "../../assets/apple.svg";
+import GoogleSvg from "../../assets/google.svg";
+import LogoSvg from "../../assets/logo.svg";
+import { useAuth } from "../../hooks/auth";
+import SignSocialButton from "../../components/SignInSocialButton";
 import {
   Container,
   Header,
@@ -13,18 +13,34 @@ import {
   SignInTitle,
   Footer,
   FooterWrapper,
-} from './styles';
-import { Alert } from "react-native";
+} from "./styles";
+import { useTheme } from "styled-components";
+import { ActivityIndicator, Alert, Platform } from "react-native";
 
 const SignIn: React.FC = () => {
-  const { signInWithGoogle } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const { signInWithGoogle, signInWithApple } = useAuth();
+  const theme = useTheme();
 
   async function handleSignInWithGoogle() {
     try {
-      await signInWithGoogle();
+      setIsLoading(true);
+      return await signInWithGoogle();
     } catch (error) {
       console.log(error);
       Alert.alert("Atenção!", "Não foi possível conectar a conta Google.");
+      setIsLoading(false);
+    }
+  }
+
+  async function handleSignInWithApple() {
+    try {
+      setIsLoading(true);
+      return await signInWithApple();
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Atenção!", "Não foi possível conectar a conta Apple.");
+      setIsLoading(false);
     }
   }
 
@@ -51,8 +67,21 @@ const SignIn: React.FC = () => {
             svg={GoogleSvg}
             onPress={handleSignInWithGoogle}
           />
-          <SignSocialButton title="Entrar com Apple" svg={AppleSvg} />
+          {Platform.OS === "ios" && (
+            <SignSocialButton
+              title="Entrar com Apple"
+              svg={AppleSvg}
+              onPress={handleSignInWithApple}
+            />
+          )}
         </FooterWrapper>
+        {isLoading && (
+          <ActivityIndicator
+            color={theme.colors.shape}
+            size="large"
+            style={{ marginTop: 18 }}
+          />
+        )}
       </Footer>
     </Container>
   );
