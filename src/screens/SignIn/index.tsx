@@ -19,7 +19,7 @@ import { Alert } from "react-native";
 const SignIn: React.FC = () => {
   const { signInWithGoogle } = useAuth();
 
-  async function handleDignInWithGoogle() {
+  async function handleSignInWithGoogle() {
     try {
       await signInWithGoogle();
     } catch (error) {
@@ -49,7 +49,7 @@ const SignIn: React.FC = () => {
           <SignSocialButton
             title="Entrar com Google"
             svg={GoogleSvg}
-            onPress={handleDignInWithGoogle}
+            onPress={handleSignInWithGoogle}
           />
           <SignSocialButton title="Entrar com Apple" svg={AppleSvg} />
         </FooterWrapper>
